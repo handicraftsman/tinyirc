@@ -160,7 +160,7 @@ on :nick do |e|
     s.nick = e[:new_nick]
   end
 
-  u = s.usercache.rename(e[:nick])
+  u = s.usercache.rename(e[:nick], e[:new_nick])
   u[:user] = e[:user]
   u[:host] = u[:host]
 end
