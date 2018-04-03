@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require 'tinyirc'
+require 'optparse'
+
+options = {
+  :cfg => './tinyirc.yaml',
+  :db => './tinyirc.db'
+}
+
+OptionParser.new do |o|
+  o.banner = 'Usage: tinyirc [OPTIONS]'
+
+  o.on '-cFILE', '--config=FILE', 'Path to the config list' do |p|
+    options[:cfg] = p
+  end
+
+  o.on '-dFILE', '--db=FILE', 'Path to the database file' do |p|
+    options[:db] = p
+  end
+end.parse!
+
+bot = TinyIRC::Bot.new(options[:cfg], options[:db])
+bot.start

@@ -1,0 +1,40 @@
+plugins:
+  path/to/plugin: # The same path as in the `require` function
+    # This table can be empty if you want to load the plugin without configuring it
+    # Plugins may require some values from this table though
+    foo: bar
+
+groups:
+  world: # All users belong to this group
+    include: # Includes permissions from listed groups into the current one
+      - plugin/world
+    perms:
+      - core/flushq
+  admin: # Admins have this group
+    include:
+      - world
+      - plugin/admin
+  owner: # Owners have this group
+    include:
+      - admin
+      - plugin/owner
+
+cooldowns:
+  plugin: 30 # Sets cooldown for plugin/*/* commands to 30 seconds
+  plugin/command: 20 # Sets cooldown for plugin/command/* commands to 20 seconds
+  plugin/command/branch: 10 # Sets cooldown for plugin/command/branch command to 10 seconds
+
+servers:
+  freenode:
+    host: irc.freenode.net
+    port: 6667
+
+    nick: YourNicknameHere
+    user: YourUsernameHere
+    pass: YourPasswordHere
+    rnam: YourRealnameHere
+
+    prefix: '@'
+
+    autojoin:
+      - '#botters-test'

@@ -1,0 +1,42 @@
+<div class="app-text">
+  <h3 class="app-title"><%= @pagename %></h3>
+</div>
+
+<div class="app-text">
+  <h4 class="app-title">Groups</h4>
+  <% @plugin.groups.each_pair do |gname, group| %>
+    <h6 class="group-name"><%= h gname %></h6>
+    <ul class="group-list">
+      <% group.perms.each do |perm| %>
+        <li class="group-list-item">
+          <span class=""><%= h perm.to_s %></span>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+
+<div class="app-text">
+  <h4 class="app-title">Commands</h4>
+</div>
+
+<% @plugin.commands.each_pair do |cname, command| %>
+  <div class="app-text">
+    <h5 class="app-title" id="<%= h(cname) %>"><%= h(cname) %></h5>
+  </div>
+  <% command.branches.each do |bname, branch| %>
+    <div class="app-text">
+      <% @sig = h branch.definition.command_signature %>
+      <h6 id="<%= h(cname) + '/' + h(bname) %>"><%= @sig %></h6>
+      <div class="mdl-tooltip mdl-tooltip--left" for="<%= h(cname) + '/' + h(bname) %>">
+        <%= @plugin.name + '/' + cname + '/' + bname %>
+      </div>
+      <% if branch.cooldown != 0 %>
+        <pre>Cooldown: <%= h branch.cooldown %></pre>
+      <% end %>
+      <pre><%= h branch.description %></pre>
+      <pre><%= h branch.definition.command_description %></pre>
+      <hr/>
+    </div>
+  <% end %>
+<% end %>

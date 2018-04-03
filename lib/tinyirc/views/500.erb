@@ -1,0 +1,5 @@
+<div class="app-text">
+  <% @err = env['sinatra.error'] %>
+  <h4 class="app-title"><%= h @err.class.name + ' - ' + @err.message %></h4>
+  <p class="app-title">If you are hosting this bot, check logs at <%= DateTime.now.strftime %></p>
+</div>

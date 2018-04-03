@@ -1,0 +1,31 @@
+<div class="app-text">
+  <h4 class="app-title">Info</h4>
+  Use sidebar to get help for plugin commands
+</div>
+
+<div class="app-text">
+  <h4 class="app-title">Groups</h4>
+  <!--<%= ERB::Util::html_escape TinyIRC::App.bot.inspect %>-->
+  <% TinyIRC::App.bot.groups.each_pair do |gname, group| %>
+    <h6 class="group-name"><%= h gname %></h6>
+    <ul class="group-list">
+      <% group.perms.each do |perm| %>
+        <li class="group-list-item">
+          <span class=""><%= h perm.to_s %></span>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+  <% TinyIRC::App.bot.plugins.each_pair do |pname, plugin| %>
+    <% plugin.groups.each_pair do |gname, group| %>
+      <h6 class="group-name"><%= h gname %></h6>
+      <ul class="group-list">
+        <% group.perms.each do |perm| %>
+          <li class="group-list-item">
+            <span class=""><%= h perm.to_s %></span>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+</div>
