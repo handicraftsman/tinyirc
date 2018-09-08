@@ -293,15 +293,15 @@ class TinyIRC::Bot
     def _read_line(socket)
       res = IO.select([socket.sock], nil, nil, 0.001)
       return nil unless res
-      socket.mtx.synchronize do
-        begin
-          return socket.sock.readline("\r\n", chomp: true).force_encoding("UTF-8")
-        rescue => e
-          socket.log.error "#{e.class.name} - #{e.message}"
+      begin
+        return socket.sock.readline("\r\n", chomp: true).force_encoding("UTF-8")
+      rescue => e
+        socket.log.error "#{e.class.name} - #{e.message}"
+        socket.mtx.synchronize do
           socket.running = false
-          handle_event(type: :disconnect, socket: socket)
-          return nil
         end
+        handle_event(type: :disconnect, socket: socket)
+        return nil
       end
     end
 
@@ -329,15 +329,15 @@ class TinyIRC::Bot
       end
       
       return unless msg
-      socket.mtx.synchronize do
-        begin
-          socket.direct_write msg.force_encoding("UTF-8")
-        rescue => e
-          socket.log.error "#{e.class.name} - #{e.message}"
+      begin
+        socket.direct_write msg.force_encoding("UTF-8")
+      rescue => e
+        socket.log.error "#{e.class.name} - #{e.message}"
+        socket.mtx.synchronize do
           socket.running = false
-          handle_event(type: :disconnect, socket: socket)
-          return nil
         end
+        handle_event(type: :disconnect, socket: socket)
+        return nil
       end
 
       socket.last_write = current

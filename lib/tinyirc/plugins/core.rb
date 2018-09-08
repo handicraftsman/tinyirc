@@ -218,6 +218,10 @@ group('admin').tap do |g|
   g.perm @name, 'flushq', 'targeted'
 end
 
+group('owner').tap do |g|
+  g.perm @name, 'eval', 'root'
+end
+
 #
 # help command
 #
@@ -426,4 +430,25 @@ flushq_cmd.branch('targeted', 'server') do |e, c|
   end
 end.tap do |b|
   b.description = 'Flushes the queue of the given server'
+end
+
+#
+# eval command
+#
+
+eval_cmd = cmd 'eval'
+
+eval_cmd.branch('root', '...') do |e, c|
+  unless c.extra.empty?
+    begin
+      out = eval(c.extra.join(' ')).inspect
+      e.reply "%BOutput%N: #{out}"
+    rescue StandardError, SyntaxError => err
+      e.reply "E: #{err.class} => #{err.message}"
+    end
+  else
+    e.reply '%BOutput%N: nil'
+  end
+end.tap do |b|
+  b.description = 'Evaluates given string'
 end

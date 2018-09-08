@@ -13,10 +13,12 @@ groups:
   admin: # Admins have this group
     include:
       - world
+      - core/admin
       - plugin/admin
   owner: # Owners have this group
     include:
       - admin
+      - core/owner
       - plugin/owner
 
 cooldowns:

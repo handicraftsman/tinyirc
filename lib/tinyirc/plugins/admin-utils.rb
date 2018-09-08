@@ -122,7 +122,7 @@ cmd('kick').branch('kick', 'who --ban --reason=REASON') do |e, c|
     to_ban = get_target(e, c, false)
     s.mode(e[:reply_to], "+b #{to_ban}")
   end
-  s.kick(e[:reply_to], c.positionals['who'])
+  s.kick(e[:reply_to], c.positionals['who'], (c.options['reason'] or 'Bye!'))
 end.tap do |b|
   b.description = 'Kicks the given user from the current channel'
   b.definition.tap do |d|
@@ -142,7 +142,7 @@ cmd('remove').branch('remove', 'who --ban --reason=REASON') do |e, c|
     to_ban = get_target(e, c, false)
     s.mode(e[:reply_to], "+b #{to_ban}")
   end
-  s.remove(e[:reply_to], c.positionals['who'])
+  s.remove(e[:reply_to], c.positionals['who'], (c.options['reason'] or 'Bye!'))
 end.tap do |b|
   b.description = 'Removes the given user from the current channel'
   b.definition.tap do |d|
