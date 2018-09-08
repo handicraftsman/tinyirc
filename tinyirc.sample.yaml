@@ -7,7 +7,7 @@ plugins:
 groups:
   world: # All users belong to this group
     include: # Includes permissions from listed groups into the current one
-      - plugin/world
+      - core/world
     perms:
       - core/flushq
   admin: # Admins have this group
