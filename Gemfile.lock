@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tinyirc (0.1.1)
+    tinyirc (0.1.2)
       particlecmd (~> 0.1)
       particlelog (~> 0.1)
       sinatra (~> 2.0)
